@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+  <head>
+    <title>Music Search Results</title>
+  </head>
+  <header><p><a href="/">Home</a></p></header>
+  <body>
+    <h1>Music Search Results</h1>
+
+    {%if music %}
+<div>
+    {% for m in music %}
+    <p><a href="music/{{m[0]}}">{{m[1]}}</a></p>
+    {% endfor %}
+</div>
+{% else %}
+      <p>No music found.</p>
+{% endif %}
+
+    
+  </body>
+</html>

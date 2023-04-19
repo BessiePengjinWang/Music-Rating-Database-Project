@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+  <header><p><a href="/">Home</a></p></header>
+  <head>
+    <title>Artist Search Results</title>
+  </head>
+  <body>
+    <h1>Artist Search Results</h1>
+    {% if artists %}
+      <div>
+        {% for artist in artists %}
+        <p>
+          <div><a href="artist/{{artist[0]}}">{{artist[1]}}</a></div>
+          {% if g.user_id != '-1' %}
+          <form method="POST" action="/artist/{{artist[0]}}/follow">
+            <input type="hidden" name="action" value="follow">
+            <input type="submit" value="Follow">
+          </form>
+          <form method="POST" action="/artist/{{artist[0]}}/follow">
+            <input type="hidden" name="action" value="unfollow">
+            <input type="submit" value="Unfollow">
+          </form>
+        </p>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No artists found.</p>
+    {% endif %}
+    <p></p>
+  </body>
+</html>

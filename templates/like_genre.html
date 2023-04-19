@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+<head>
+	<title>User Profile</title>
+</head>
+<header><form method="POST" action="/logout">
+      <a href="/">Home</a>
+    <input type="submit" value="Logout">
+  </form></header>
+<body>
+
+	{% if g.user_id %}
+		<h1>Welcome, {{ username }}!</h1>
+
+		<form action="/profile" method="post">
+			<label for="genre">Select a genre to like:</label>
+			<select id="genre" name="genre">
+				<option value="Rock">Rock</option>
+				<option value="Jazz">Jazz</option>
+				<option value="Pop">Pop</option>
+				<option value="Electronic">Electronic</option>
+				<option value="Punk">Punk</option>
+				<option value="Folk">Folk</option>
+				<option value="Country">Country</option>
+				<option value="Classical">Classical</option>
+				<option value="Experimental">Experimental</option>
+				<option value="Dance">Dance</option>
+				<option value="Blues">Blues</option>
+				<option value="Hip Hop">Hip Hop</option>
+				<option value="R&amp;B">R&amp;B</option>
+				<option value="Psychedelia">Psychedelia</option>
+			</select>
+			<button type="submit" name="action" value="like">Like Genre</button>
+            <button type="submit" name="action" value="dislike">Dislike Genre</button>
+        </form>
+
+        {% if liked_genres %}
+            <p>Liked genres:</p>
+            <ul>
+                {% for genre in liked_genres %}
+                    <li>{{ genre }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No genres liked yet.</p>
+        {% endif %}
+
+        {% if followed_artists %}
+            <p>Followed artists:</p>
+            <ul>
+                {% for artist in followed_artists %}
+                    <li><a href="/artist/{{ artist.artist_id }}">{{ artist.artist_name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You are not following any artists yet.</p>
+        {% endif %}
+
+    {% else %}
+        <p>You are not logged in.</p>
+    {% endif %}
+
+</body>
+</html>

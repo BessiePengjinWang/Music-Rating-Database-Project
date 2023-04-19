@@ -1,0 +1,115 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+  <h1>{{music_info[0][1]}}</h1>
+  <div>
+    Artist: 
+    <a href="/artist/{{music_info[0][6]}}">{{music_info[0][2]}}</a>
+    
+  </div>
+  <div>
+    Record Label: {{music_info[0][3]}}
+  </div>
+  <div>
+    Release Date: {{music_info[0][4]}}
+  </div>
+  <div>
+    Language: {{music_info[0][5]}}
+  </div>
+  <div>
+  	Genres: {{genres}}
+  </div>
+  <div>
+  	Average Rating: {{avg_rating}}
+  </div>
+  {% if isAlbum %}
+  <div>
+  	Type: Album
+  	</div>
+  	<div>
+  	Number Songs: {{album_song_info[0][2]}}
+  	</div>
+  	<div>
+  	Songs: 
+  	{% for s in album_song_info %}
+  	<div>
+    <a href="/music/{{s[0]}}">{{s[1]}}</a>
+	</div>
+    {% endfor %}
+  	</div>
+  {% else %}
+  	{%if isSingle %}
+  	<div>
+  	Type: Single
+  	<div>
+  	Length: {{album_song_info}} s.
+  	</div>
+  	</div>
+  	{% else %}
+	<div>
+  	Type: Song on Album
+  	</div>
+  	<div>
+  	Length: {{album_song_info[2]}} s.
+  	</div>
+  	<div>
+  	Album: <a href="/music/{{album_song_info[0]}}">{{album_song_info[1]}}</a>
+  	</div>
+
+  	{% endif %}
+  {% endif %}
+
+
+  
+
+  {% if g.user_id != '-1' and user_rating != None %}
+  <p></p>
+  <h2>Your Rating</h2>
+    <div>User: {{user_rating[0]}}</div>
+    <div>Date: {{user_rating[1]}}</div>
+    <div>Rating: {{user_rating[2]}}</div>
+    <div>Comment: {{user_rating[3]}}</div> 
+	<div>
+	<form method="POST" action="/music/{{music_info[0][0]}}/deleterating">
+		<input type="submit" value="Delete Rating">
+</form> </div>
+    <p></p>
+{% else %}
+{% if g.user_id != '-1'%}
+<h2>Add Rating</h2>
+<form method="POST" action="/music/{{music_info[0][0]}}/addrating">
+<p>Rating (1-5): <input type="number" name="rating_value"></p>
+<p>Comment: <input type="text" name="comment"></p>
+<p><input type="submit" value="Rate"></p>
+</form>
+{% endif %}
+{% endif %}
+
+<div>
+	<h2>Ratings</h2>
+    {% for r in ratings %}
+    <p>
+    <div>User: {{r[0]}}</div>
+    <div>Date: {{r[1]}}</div>
+    <div>Rating: {{r[2]}}</div>
+    <div>Comment: {{r[3]}}</div> 
+    </p>
+    {% endfor %}
+</div>
+
+<div>
+	<h2>Similar Music</h2>
+    {% for sm in similar_music %}
+    <p><a href="/music/{{sm[0]}}">{{sm[1]}}</a></p>
+    {% endfor %}
+</div>
+
+</body>
+
+
+</html>

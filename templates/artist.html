@@ -1,0 +1,43 @@
+<html>
+  <style>
+    body {
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+  {% if search_results %}
+  <h2>Artist Search Results</h2>
+  <div>
+    {% for artist in search_results %}
+    <div>{{artist[1]}}</div>
+    <p><a href="/artist/{{artist[0]}}">{{artist[1]}}</a></p>
+    {% endfor %}
+  </div>
+  <hr>
+  {% endif %}
+
+  {% if artist_info %}
+  <h1>{{artist_info.artist_name}}</h1>
+  <!-- Remove the date_started field -->
+  <div>
+    Language: {{artist_info.artist_language}}
+  </div>
+  <div>
+    Type: {{artist_info.artist_type}}
+  </div>
+
+  {% if g.user_id != '-1' %}
+  {% if is_following %}
+  <form method="POST" action="/artist/{{artist_info.artist_id}}/follow">
+    <button type="submit" name="action" value="unfollow">Unfollow</button>
+  </form>
+  {% else %}
+  <form method="POST" action="/artist/{{artist_info.artist_id}}/follow">
+    <button type="submit" name="action" value="follow">Follow</button>
+  </form>
+  {% endif %}
+  {% endif %}
+  {% endif %}
+
+</html>

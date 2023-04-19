@@ -1,0 +1,39 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+  <header>
+	  {% if g.user_id == '-1' %}
+    <div><a href="login">Login</a>  <a href="signup">Sign Up</a></div>
+  
+{% else %}
+<div>
+  <form method="POST" action="/logout">
+    {{username}}  <a href="profile">View Profile</a>
+    <input type="submit" value="Logout">
+  </form>
+</div>
+  {% endif %}
+
+
+  </header>
+<body>
+  <h1>Music Rating Site</h1>
+  
+  <form method="POST" action="/search_music">
+<p>Search for music by name: <input type="text" name="name"> <input type="submit" value="Search"></p>
+</form>
+
+<form method="POST" action="/search_artist">
+  <p>Search for artists by name: <input type="text" name="name"> <input type="submit" value="Search"></p>
+  </form>
+
+  
+</body>
+
+
+</html>
